@@ -7,8 +7,8 @@ public class FCFS {
     public List<Processo> fila;
 
     public FCFS(List<Processo> processos) {
-        Comparator<Processo> comparador = Comparator.comparingInt(Processo::getTempoDeChegada);
-        Collections.sort(processos, comparador);
+        Comparator<Processo> comparadorPorTempoDeChegada = Comparator.comparingInt(Processo::getTempoDeChegada);
+        Collections.sort(processos, comparadorPorTempoDeChegada);
         this.fila = processos;
     }
 
