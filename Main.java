@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
+            System.out.println("Passe o nome do arquivo de entrada");
+            return;
+        }
         BufferedReader leitor = new BufferedReader(new FileReader(args[0]));
         String temp;
         ArrayList<Processo> processos = new ArrayList<>();
