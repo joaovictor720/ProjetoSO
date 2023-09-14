@@ -16,9 +16,13 @@ public class Main {
             String[] dados = temp.split(" ");
             processos.add(new Processo(Integer.parseInt(dados[0]), Integer.parseInt(dados[1])));
         }
+        
         FCFS fcfs = new FCFS(processos);
         fcfs.rodar();
         fcfs.printarMedias();
+
+        SJF sjf = new SJF(processos);
+        sjf.printarMedias(sjf.rodar());
 
         leitor.close();
     }

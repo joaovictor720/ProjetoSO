@@ -12,7 +12,7 @@ public class FCFS {
         this.fila = processos;
     }
 
-    public void rodar() {
+    public List<Processo> rodar() {
         int tempoAtual = 0;
         for (Processo p : fila) {
             p.tempoDeResposta = tempoAtual - p.tempoDeChegada;
@@ -21,6 +21,7 @@ public class FCFS {
             tempoAtual += p.tempoDePico;
             //System.out.println("tempoAtual = " + tempoAtual);
         }
+        return this.fila;
     }
 
     public void printarMedias() {
