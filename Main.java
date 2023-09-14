@@ -18,11 +18,10 @@ public class Main {
         }
         
         FCFS fcfs = new FCFS(processos);
-        fcfs.rodar();
-        fcfs.printarMedias();
+        fcfs.printarMedias(fcfs.rodar(), "FCFS");
 
         SJF sjf = new SJF(processos);
-        sjf.printarMedias(sjf.rodar());
+        sjf.printarMedias(sjf.rodar(), "SJF");
 
         leitor.close();
     }
