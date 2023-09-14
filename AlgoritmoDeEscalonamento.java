@@ -6,7 +6,7 @@ public abstract class AlgoritmoDeEscalonamento {
     abstract public List<Processo> rodar();
 
     public void printarMedias(List<Processo> processos, String nomeDoAlgoritmo) {
-        int totalRetorno = 0, totalResposta = 0, totalEspera = 0;
+        double totalRetorno = 0, totalResposta = 0, totalEspera = 0;
         for (Processo p : processos) {
             //System.out.println("p " + p.tempoDeChegada + " " + p.tempoDePico);
             //System.out.println("ret = " + p.tempoDeRetorno);
@@ -17,6 +17,10 @@ public abstract class AlgoritmoDeEscalonamento {
             totalResposta += p.tempoDeResposta;
             totalEspera += p.tempoDeEspera;
         }
-        System.out.println(nomeDoAlgoritmo + " " + ((float) totalRetorno) / processos.size() + " " + ((float) totalResposta) / processos.size() + " " + ((float)totalEspera) / processos.size());
+        String mediaRetorno = String.format("%,.1f", totalRetorno/processos.size());
+        String medioResposta = String.format("%,.1f", totalResposta/processos.size());
+        String mediaEspera = String.format("%,.1f", totalEspera/processos.size());
+
+        System.out.println(nomeDoAlgoritmo + " " + mediaRetorno + " " + medioResposta + " " + mediaEspera);
     }
 }
