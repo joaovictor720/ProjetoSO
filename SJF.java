@@ -7,7 +7,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class SJF extends AlgoritmoDeEscalonamento {
-    public List<Processo> fila;
 
     public SJF(List<Processo> processos) {
         Comparator<Processo> comparador = Comparator
@@ -17,12 +16,12 @@ public class SJF extends AlgoritmoDeEscalonamento {
         // Ordenando pelo tempo de chegada, e então pelo tempo de pico
         Collections.sort(processos, comparador);
 
-        this.fila = processos;
+        this.processosDisponiveis = processos;
     }
     
     public List<Processo> rodar() {
         int tempoAtual = 0;
-        List<Processo> processosRestantes = new LinkedList<>(this.fila);
+        List<Processo> processosRestantes = new LinkedList<>(this.processosDisponiveis);
         List<Processo> ordemDeExecucao = new ArrayList<>();
         
         while (!processosRestantes.isEmpty()) {

@@ -23,6 +23,9 @@ public class Main {
         SJF sjf = new SJF(processos);
         sjf.printarMedias(sjf.rodar(), "SJF");
 
+        RR rr = new RR(processos);
+        rr.printarMedias(rr.rodar(), "RR");
+
         leitor.close();
     }
 }

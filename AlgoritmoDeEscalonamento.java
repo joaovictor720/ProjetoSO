@@ -1,7 +1,7 @@
 import java.util.List;
 
 public abstract class AlgoritmoDeEscalonamento {
-    List<Processo> fila;
+    List<Processo> processosDisponiveis;
 
     abstract public List<Processo> rodar();
 
