@@ -9,12 +9,14 @@ public class Processo {
     
     public int tempoDeChegadaNaFila;
     public boolean foiAlocado = false;
+    public String pid;
     
-    public Processo(int tempoDeChegada, int tempoDePico) {
+    public Processo(int tempoDeChegada, int tempoDePico, String pid) {
         this.tempoDeChegada = tempoDeChegada;
         this.tempoDeChegadaNaFila = tempoDeChegada;
         this.tempoRestante = tempoDePico;
         this.tempoDePico = tempoDePico;
+        this.pid = pid;
     }
 
     public int getTempoDeChegada() {
@@ -67,7 +69,7 @@ public class Processo {
 
     @Override
     public String toString() {
-        return String.format("%d %d", tempoDeChegada, tempoDePico);
+        return String.format(this.pid + "(%d %d)", tempoDeChegada, tempoDePico);
     }
     
 }

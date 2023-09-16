@@ -14,9 +14,10 @@ public class SJF extends AlgoritmoDeEscalonamento {
         .thenComparingInt(Processo::getTempoDePico);
         
         // Ordenando pelo tempo de chegada, e então pelo tempo de pico
-        Collections.sort(processos, comparador);
+        List<Processo> copia = new ArrayList<>(processos);
+        Collections.sort(copia, comparador);
 
-        this.processosDisponiveis = processos;
+        this.processosDisponiveis = copia;
     }
     
     public List<Processo> rodar() {

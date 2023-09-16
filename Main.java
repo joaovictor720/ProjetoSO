@@ -14,9 +14,10 @@ public class Main {
         String temp;
         ArrayList<Processo> processos = new ArrayList<>();
         
+        int i = 1;
         while ((temp = leitor.readLine()) != null) {
             String[] dados = temp.split(" ");
-            processos.add(new Processo(Integer.parseInt(dados[0]), Integer.parseInt(dados[1])));
+            processos.add(new Processo(Integer.parseInt(dados[0]), Integer.parseInt(dados[1]), "P"+ (i++)));
         }
         
         FCFS fcfs = new FCFS(processos);

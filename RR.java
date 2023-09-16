@@ -20,25 +20,33 @@ public class RR extends AlgoritmoDeEscalonamento {
         int tempoAtual = 0;
         List<Processo> processosRestantes = new ArrayList<>(this.processosDisponiveis);
         List<Processo> processosExecutados = new ArrayList<>();
+        Queue<Processo> filaDeProntos = new ArrayBlockingQueue<>(processosRestantes.size());
+        Processo p = null;
         
-        while (!processosRestantes.isEmpty()) {
-            Queue<Processo> processosProntos = new ArrayBlockingQueue<>(processosRestantes.size());
-            for (Processo p : processosRestantes) {
+        // Enquanto processosRestantes e "filaReal" não estiverem vazias
+        while (!processosRestantes.isEmpty() || !filaDeProntos.isEmpty()) {
+            // Tirando da fila de restantes (que não estão no sistema), e colocando na fila de prontos
+            for (int i = 0; i < processosRestantes.size(); ++i) {
+                p = processosRestantes.get(i);
                 if (p.tempoDeChegada <= tempoAtual) {
-                    processosProntos.add(p);
+                    System.out.println("adicionando " + p.toString() + "(tirando dos restantes)");
+                    filaDeProntos.add(p);
+                    processosRestantes.remove(p);
+                } else {
+                    break;
                 }
             }
-            Processo primeiroDaFila = processosProntos.poll();
+            Processo primeiroDaFila = filaDeProntos.poll();
             if (primeiroDaFila == null) {
                 //tempoAtual += this.quantum;
                 tempoAtual++;
                 continue;
             }
-            
+            //System.out.println("executando o " + primeiroDaFila.toString());
             if (!primeiroDaFila.foiAlocado) {
                 primeiroDaFila.tempoDeResposta = tempoAtual - primeiroDaFila.tempoDeChegada;
                 primeiroDaFila.foiAlocado = true;
-                System.out.println("tResposta de " + primeiroDaFila.toString() + ": " + primeiroDaFila.tempoDeResposta + " no tempo " + tempoAtual);
+                //System.out.println("tResposta de " + primeiroDaFila.toString() + ": " + primeiroDaFila.tempoDeResposta + " no tempo " + tempoAtual);
             }
 
             primeiroDaFila.tempoDeEspera += tempoAtual - primeiroDaFila.tempoDeChegadaNaFila;
@@ -49,15 +57,28 @@ public class RR extends AlgoritmoDeEscalonamento {
             tempoAtual += tempoGasto;
             
             if (primeiroDaFila.tempoRestante == 0) {
-                // processo terminou
+                // Processo terminou
                 primeiroDaFila.tempoDeRetorno = primeiroDaFila.tempoDeEspera + primeiroDaFila.tempoDePico;
-                processosRestantes.remove(primeiroDaFila); 
+                //processosRestantes.remove(primeiroDaFila);
                 processosExecutados.add(primeiroDaFila);
             } else {
-                // mandando pra o final da fila
                 primeiroDaFila.tempoDeChegadaNaFila = tempoAtual;
-                processosRestantes.remove(primeiroDaFila);
-                processosRestantes.add(primeiroDaFila);
+                // Juntando todos os processos que possivelmente tenham chegado depois da execução do processo atual
+                for (int i = 0; i < processosRestantes.size(); ++i) {
+                    p = processosRestantes.get(i);
+                    if (p.tempoDeChegada <= tempoAtual) {
+                        System.out.println("adicionando " + p.toString() + "(tirando dos restantes embaixo)");
+                        filaDeProntos.add(p);
+                        processosRestantes.remove(p);
+                    } else {
+                        break;
+                    }
+                }
+                System.out.println("adicionando " + p.toString());
+                // Mandando pra o final da fila
+                filaDeProntos.add(primeiroDaFila);
+                //processosRestantes.remove(primeiroDaFila);
+                //processosRestantes.add(primeiroDaFila);
                 //System.out.println("mandando " + primeiroDaFila.toString() + " pro final da fila em " + tempoAtual);
             }
         }
