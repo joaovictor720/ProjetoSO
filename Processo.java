@@ -71,5 +71,9 @@ public class Processo {
     public String toString() {
         return String.format(this.pid + "(%d %d)", tempoDeChegada, tempoDePico);
     }
+
+    public String toStringAll() {
+        return this.toString() + " -> ret = " + this.tempoDeRetorno + ", res = " + this.tempoDeResposta + ", esp = " + this.tempoDeEspera;
+    }
     
 }

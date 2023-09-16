@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
 
@@ -12,21 +14,25 @@ public class Main {
         }
         BufferedReader leitor = new BufferedReader(new FileReader(args[0]));
         String temp;
-        ArrayList<Processo> processos = new ArrayList<>();
+        ArrayList<Processo> processosFCFS = new ArrayList<>();
+        ArrayList<Processo> processosSJF = new ArrayList<>();
+        ArrayList<Processo> processosRR = new ArrayList<>();
         
         int i = 1;
         while ((temp = leitor.readLine()) != null) {
             String[] dados = temp.split(" ");
-            processos.add(new Processo(Integer.parseInt(dados[0]), Integer.parseInt(dados[1]), "P"+ (i++)));
+            processosFCFS.add(new Processo(Integer.parseInt(dados[0]), Integer.parseInt(dados[1]), "P"+ i));
+            processosSJF.add(new Processo(Integer.parseInt(dados[0]), Integer.parseInt(dados[1]), "P"+ i));
+            processosRR.add(new Processo(Integer.parseInt(dados[0]), Integer.parseInt(dados[1]), "P"+ i));
         }
         
-        FCFS fcfs = new FCFS(processos);
+        FCFS fcfs = new FCFS(processosFCFS);
         fcfs.printarMedias(fcfs.rodar(), "FCFS");
 
-        SJF sjf = new SJF(processos);
+        SJF sjf = new SJF(processosSJF);
         sjf.printarMedias(sjf.rodar(), "SJF");
 
-        RR rr = new RR(processos, RR_QUANTUM);
+        RR rr = new RR(processosRR, RR_QUANTUM);
         rr.printarMedias(rr.rodar(), "RR");
 
         leitor.close();

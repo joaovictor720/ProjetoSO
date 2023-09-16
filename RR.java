@@ -22,16 +22,18 @@ public class RR extends AlgoritmoDeEscalonamento {
         List<Processo> processosExecutados = new ArrayList<>();
         Queue<Processo> filaDeProntos = new ArrayBlockingQueue<>(processosRestantes.size());
         Processo p = null;
-        
+
         // Enquanto processosRestantes e "filaReal" não estiverem vazias
         while (!processosRestantes.isEmpty() || !filaDeProntos.isEmpty()) {
             // Tirando da fila de restantes (que não estão no sistema), e colocando na fila de prontos
             for (int i = 0; i < processosRestantes.size(); ++i) {
                 p = processosRestantes.get(i);
+                //System.out.println("verificando " + p.toString() + " em cima");
                 if (p.tempoDeChegada <= tempoAtual) {
-                    System.out.println("adicionando " + p.toString() + "(tirando dos restantes)");
+                    //System.out.println("adicionando " + p.toString() + "(tirando dos restantes)");
                     filaDeProntos.add(p);
                     processosRestantes.remove(p);
+                    --i;
                 } else {
                     break;
                 }
@@ -48,8 +50,10 @@ public class RR extends AlgoritmoDeEscalonamento {
                 primeiroDaFila.foiAlocado = true;
                 //System.out.println("tResposta de " + primeiroDaFila.toString() + ": " + primeiroDaFila.tempoDeResposta + " no tempo " + tempoAtual);
             }
+            //System.out.println(primeiroDaFila.toString() + ".tempoDeEspera += " + tempoAtual + " - " + primeiroDaFila.tempoDeChegadaNaFila);
 
             primeiroDaFila.tempoDeEspera += tempoAtual - primeiroDaFila.tempoDeChegadaNaFila;
+            //System.out.println(primeiroDaFila.toStringAll());
             
             // Simulando o gasto de tempo na vez do primeiro da fila
             int tempoGasto = Math.min(this.quantum, primeiroDaFila.tempoRestante);
@@ -58,28 +62,28 @@ public class RR extends AlgoritmoDeEscalonamento {
             
             if (primeiroDaFila.tempoRestante == 0) {
                 // Processo terminou
-                primeiroDaFila.tempoDeRetorno = primeiroDaFila.tempoDeEspera + primeiroDaFila.tempoDePico;
-                //processosRestantes.remove(primeiroDaFila);
+                //primeiroDaFila.tempoDeRetorno = primeiroDaFila.tempoDeEspera + primeiroDaFila.tempoDePico;
+                primeiroDaFila.tempoDeRetorno = tempoAtual - primeiroDaFila.tempoDeChegada;
                 processosExecutados.add(primeiroDaFila);
+                //System.out.println("Terminado: " + primeiroDaFila.toStringAll());
+                //System.out.println("processo " + primeiroDaFila.toString() + " terminou");
             } else {
                 primeiroDaFila.tempoDeChegadaNaFila = tempoAtual;
                 // Juntando todos os processos que possivelmente tenham chegado depois da execução do processo atual
                 for (int i = 0; i < processosRestantes.size(); ++i) {
                     p = processosRestantes.get(i);
                     if (p.tempoDeChegada <= tempoAtual) {
-                        System.out.println("adicionando " + p.toString() + "(tirando dos restantes embaixo)");
+                        //System.out.println("adicionando " + p.toString() + "(tirando dos restantes embaixo)");
                         filaDeProntos.add(p);
                         processosRestantes.remove(p);
+                        --i;
                     } else {
                         break;
                     }
                 }
-                System.out.println("adicionando " + p.toString());
+                //System.out.println("adicionando " + p.toString());
                 // Mandando pra o final da fila
                 filaDeProntos.add(primeiroDaFila);
-                //processosRestantes.remove(primeiroDaFila);
-                //processosRestantes.add(primeiroDaFila);
-                //System.out.println("mandando " + primeiroDaFila.toString() + " pro final da fila em " + tempoAtual);
             }
         }
         return processosExecutados;
