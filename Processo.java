@@ -2,13 +2,17 @@ public class Processo {
     public int tempoDeChegada;
     public int tempoRestante;
     public int tempoDePico;
+
     public int tempoDeResposta = 0;
     public int tempoDeEspera = 0;
     public int tempoDeRetorno = 0;
-    public boolean foiRespondido = false;
+    
+    public int tempoDeChegadaNaFila;
+    public boolean foiAlocado = false;
     
     public Processo(int tempoDeChegada, int tempoDePico) {
         this.tempoDeChegada = tempoDeChegada;
+        this.tempoDeChegadaNaFila = tempoDeChegada;
         this.tempoRestante = tempoDePico;
         this.tempoDePico = tempoDePico;
     }
@@ -61,5 +65,9 @@ public class Processo {
         this.tempoDeRetorno = tempoDeRetorno;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%d %d", tempoDeChegada, tempoDePico);
+    }
     
 }

@@ -30,6 +30,10 @@ public class SJF extends AlgoritmoDeEscalonamento {
                 if (p.tempoDeChegada <= tempoAtual) {
                     processosProntos.add(p);
                 } else {
+                    /**
+                     * A lista já está ordenada em relação aos tempos de pico, então se entrou aqui,
+                     * os seguintes terão chegado garantidamente depois do tempo atual
+                     */
                     break;
                 }
             }

@@ -3,6 +3,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Main {
+
+    public static int RR_QUANTUM = 2;
     public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.out.println("Passe o nome do arquivo de entrada");
@@ -23,7 +25,7 @@ public class Main {
         SJF sjf = new SJF(processos);
         sjf.printarMedias(sjf.rodar(), "SJF");
 
-        RR rr = new RR(processos);
+        RR rr = new RR(processos, RR_QUANTUM);
         rr.printarMedias(rr.rodar(), "RR");
 
         leitor.close();
