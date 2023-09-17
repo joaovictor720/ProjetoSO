@@ -6,6 +6,8 @@ public class FCFS extends AlgoritmoDeEscalonamento {
 
     public FCFS(List<Processo> processos) {
         Comparator<Processo> comparadorPorTempoDeChegada = Comparator.comparingInt(Processo::getTempoDeChegada);
+
+        // Ordenando, pelo tempo de chegada, os processos que serão simulados
         Collections.sort(processos, comparadorPorTempoDeChegada);
         this.processosDisponiveis = processos;
     }

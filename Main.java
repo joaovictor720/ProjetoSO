@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -14,9 +13,9 @@ public class Main {
         }
         BufferedReader leitor = new BufferedReader(new FileReader(args[0]));
         String temp;
-        ArrayList<Processo> processosFCFS = new ArrayList<>();
-        ArrayList<Processo> processosSJF = new ArrayList<>();
-        ArrayList<Processo> processosRR = new ArrayList<>();
+        List<Processo> processosFCFS = new ArrayList<>();
+        List<Processo> processosSJF = new ArrayList<>();
+        List<Processo> processosRR = new ArrayList<>();
         
         int i = 1;
         while ((temp = leitor.readLine()) != null) {

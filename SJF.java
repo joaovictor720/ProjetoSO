@@ -27,23 +27,26 @@ public class SJF extends AlgoritmoDeEscalonamento {
         
         while (!processosRestantes.isEmpty()) {
             Queue<Processo> processosProntos = new PriorityQueue<>(Comparator.comparingInt(Processo::getTempoDePico));
+            // Juntando todos os processos que chegaram até o tempo atual, e ordenando pelo tempo de 
+            // pico (fila de prioridade em relação ao tempo de restante)
             for (Processo p : processosRestantes) {
                 if (p.tempoDeChegada <= tempoAtual) {
                     processosProntos.add(p);
                 } else {
-                    /**
-                     * A lista já está ordenada em relação aos tempos de pico, então se entrou aqui,
-                     * os seguintes terão chegado garantidamente depois do tempo atual
-                     */
+                    // A lista já está ordenada em relação aos tempos de chegada, então se entrou 
+                    // aqui, os seguintes terão chegado garantidamente depois do tempo atual
                     break;
                 }
             }
+            // Pegando o menor processo, que estará na frente da fila de prioridade
             Processo menorProcesso = processosProntos.poll();
             if (menorProcesso == null) {
                 tempoAtual++;
                 continue;
             }
             processosRestantes.remove(menorProcesso);
+
+            // Análogo ao FCFS
             menorProcesso.tempoDeResposta = tempoAtual - menorProcesso.tempoDeChegada;
             menorProcesso.tempoDeEspera = tempoAtual - menorProcesso.tempoDeChegada;
             menorProcesso.tempoDeRetorno = menorProcesso.tempoDeEspera + menorProcesso.tempoDePico;

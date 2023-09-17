@@ -8,11 +8,6 @@ public abstract class AlgoritmoDeEscalonamento {
     public void printarMedias(List<Processo> processos, String nomeDoAlgoritmo) {
         double totalRetorno = 0, totalResposta = 0, totalEspera = 0;
         for (Processo p : processos) {
-            //System.out.println("p " + p.tempoDeChegada + " " + p.tempoDePico);
-            //System.out.println("ret = " + p.tempoDeRetorno);
-            //System.out.println("res = " + p.tempoDeResposta);
-            //System.out.println("esp = " + p.tempoDeEspera);
-
             totalRetorno += p.tempoDeRetorno;
             totalResposta += p.tempoDeResposta;
             totalEspera += p.tempoDeEspera;
