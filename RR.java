@@ -24,23 +24,22 @@ public class RR extends AlgoritmoDeEscalonamento {
         List<Processo> processosExecutados = new ArrayList<>();
         Queue<Processo> filaDeProntos = new LinkedList<>();
         Processo temp = null;
-        
-        // Tirando da fila de restantes (que não estão no sistema), e colocando na fila de prontos
-        for (int i = 0; i < processosRestantes.size(); ++i) {
-            temp = processosRestantes.get(i);
-            if (temp.tempoDeChegada <= tempoAtual) {
-                filaDeProntos.add(temp); // Colocando no final da fila de prontos
-                processosRestantes.remove(temp); // E tirando da lista de processos que não chegaram
-                --i;
-            } else {
-                // A lista já está ordenada em relação aos tempos de pico, então se entrou aqui,
-                // os seguintes terão chegado garantidamente depois do tempo atual
-                break;
-            }
-        }
 
         // Enquanto houver processos que ainda vão chegar na fila de prontos, ou chegaram e não terminaram
         while (!processosRestantes.isEmpty() || !filaDeProntos.isEmpty()) {
+            // Tirando da fila de restantes (que não estão no sistema), e colocando na fila de prontos
+            for (int i = 0; i < processosRestantes.size(); ++i) {
+                temp = processosRestantes.get(i);
+                if (temp.tempoDeChegada <= tempoAtual) {
+                    filaDeProntos.add(temp); // Colocando no final da fila de prontos
+                    processosRestantes.remove(temp); // E tirando da lista de processos que não chegaram
+                    --i;
+                } else {
+                    // A lista já está ordenada em relação aos tempos de pico, então se entrou aqui,
+                    // os seguintes terão chegado garantidamente depois do tempo atual
+                    break;
+                }
+            }
             // Pegando o próximo da fila de prontos para alocar na CPU
             Processo primeiroDaFila = filaDeProntos.poll();
             
